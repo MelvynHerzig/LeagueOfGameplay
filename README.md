@@ -5,7 +5,7 @@ Project implementing some League of Legends gameplay in Unreal Engine 5 with Gam
 # Table of Contents
 
 0. [Setup](#0-setup)
-1. [Adding a character](#1-adding-a-character)
+1. [Adding a character](#1-adding-a-character-with-movement)
 
 
 # 0) Setup
@@ -18,7 +18,7 @@ The project is setup based on an empty project with starter content. In preparat
 
 </details>
 
-# 1) Adding a character
+# 1) Adding a character with movement
 
 <details>
 
