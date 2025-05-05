@@ -1,13 +1,13 @@
 // Herzig Melvyn - League of Gameplay
 
-#include "LGPCharacter.h"
+#include "LgpCharacter.h"
 
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
-ALGPCharacter::ALGPCharacter(const FObjectInitializer& ObjectInitializer): Super(ObjectInitializer)
+ALgpCharacter::ALgpCharacter(const FObjectInitializer& ObjectInitializer): Super(ObjectInitializer)
 {
 	PrimaryActorTick.bStartWithTickEnabled = false;
 	PrimaryActorTick.bCanEverTick = false;
@@ -16,8 +16,8 @@ ALGPCharacter::ALGPCharacter(const FObjectInitializer& ObjectInitializer): Super
 	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComponent"));
 	SpringArmComponent->SetupAttachment(RootComponent);
 	SpringArmComponent->SetUsingAbsoluteRotation(true);
-	SpringArmComponent->TargetArmLength = 600.f;
-	SpringArmComponent->SetRelativeRotation(FRotator(-50.f, 0.f, 0.f));
+	SpringArmComponent->TargetArmLength = 700.f;
+	SpringArmComponent->SetRelativeRotation(FRotator(-60.f, 0.f, 0.f));
 	SpringArmComponent->bDoCollisionTest = false;
 
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
@@ -36,7 +36,7 @@ ALGPCharacter::ALGPCharacter(const FObjectInitializer& ObjectInitializer): Super
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 }
 
-void ALGPCharacter::BeginPlay()
+void ALgpCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 }
