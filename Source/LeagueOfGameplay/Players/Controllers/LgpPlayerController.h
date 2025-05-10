@@ -6,6 +6,7 @@
 #include "GameFramework/PlayerController.h"
 #include "LgpPlayerController.generated.h"
 
+class ALgpCamera;
 class UNiagaraSystem;
 class UInputAction;
 class UInputMappingContext;
@@ -19,6 +20,8 @@ class LEAGUEOFGAMEPLAY_API ALgpPlayerController : public APlayerController
 public:
 	ALgpPlayerController();
 
+	FORCEINLINE ALgpCamera* GetPlayerCamera() const { return PlayerCamera; }
+
 protected:
 	/** Called when the player presses the MoveTo action. Get destination and spawn cursor fx. */
 	void OnMoveToStarted();
@@ -29,6 +32,7 @@ protected:
 	
 	//~APlayerController interface
 	void SetupInputComponent() override;
+	void OnPossess(APawn* InPawn) override;
 	//~End of APlayerController interface
 
 private:
@@ -39,14 +43,21 @@ private:
 	 */
 	bool QueryHitLocationUnderCursor(FVector& Location);
 
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="LeagueOfGameplay|Camera")
+	TSubclassOf<ALgpCamera> CameraClass;
+	
 private:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta=(AllowPrivateAccess = "true"))
+	UPROPERTY()
+	TObjectPtr<ALgpCamera> PlayerCamera;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "LeagueOfGameplay|Input", meta=(AllowPrivateAccess = "true"))
 	TObjectPtr<UInputMappingContext> DefaultMappingContext;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input|MoveTo", meta=(AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "LeagueOfGameplay|Input|MoveTo", meta=(AllowPrivateAccess = "true"))
 	TObjectPtr<UInputAction> MoveToAction;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input|MoveTo", meta=(AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "LeagueOfGameplay|Input|MoveTo", meta=(AllowPrivateAccess = "true"))
 	UNiagaraSystem* FXCursor;
 
 	/** Coordinate of the destination where the player wants to move. */

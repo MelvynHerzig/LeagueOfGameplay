@@ -8,6 +8,7 @@
 #include "NiagaraFunctionLibrary.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "LeagueOfGameplay/LeagueOfGameplay.h"
+#include "LeagueOfGameplay/Players/Camera/LgpCamera.h"
 
 ALgpPlayerController::ALgpPlayerController()
 {
@@ -65,6 +66,17 @@ void ALgpPlayerController::SetupInputComponent()
 	{
 		UE_LOG(LogLgp, Warning, TEXT("InputComponent is not of type UEnhancedInputComponent. Please check your input settings."));
 	}
+}
+
+void ALgpPlayerController::OnPossess(APawn* InPawn)
+{
+	Super::OnPossess(InPawn);
+
+	// Add a new camera and uses it.
+	FVector CameraLocation = InPawn->GetActorLocation();
+	PlayerCamera = GetWorld()->SpawnActor<ALgpCamera>(CameraClass, CameraLocation, FRotator::ZeroRotator);
+	
+	SetViewTarget(PlayerCamera);
 }
 
 bool ALgpPlayerController::QueryHitLocationUnderCursor(FVector& Location)
