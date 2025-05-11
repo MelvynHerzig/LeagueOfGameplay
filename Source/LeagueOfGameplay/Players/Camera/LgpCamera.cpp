@@ -2,7 +2,10 @@
 
 #include "LgpCamera.h"
 
+#include "Blueprint/WidgetLayoutLibrary.h"
 #include "Camera/CameraComponent.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "Math/MathFwd.h"
 #include "GameFramework/SpringArmComponent.h"
 
 
@@ -13,7 +16,7 @@ ALgpCamera::ALgpCamera()
 
 	// Set up the camera
 	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComponent"));
-	SpringArmComponent->SetupAttachment(RootComponent);
+	RootComponent = SpringArmComponent;
 	SpringArmComponent->SetUsingAbsoluteRotation(true);
 	SpringArmComponent->TargetArmLength = 700.f;
 	SpringArmComponent->SetRelativeRotation(FRotator(-60.f, 0.f, 0.f));
@@ -22,4 +25,30 @@ ALgpCamera::ALgpCamera()
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 	CameraComponent->SetupAttachment(SpringArmComponent, USpringArmComponent::SocketName);
 	CameraComponent->bUsePawnControlRotation = false;
+}
+
+void ALgpCamera::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	static FVector2d MousePosition = FVector2d::ZeroVector;
+	static FVector2d ViewPortSize = FVector2d::ZeroVector;
+	static const FVector2d SensitiveZoneDimensions = FVector2d(100.f, 100.f);
+	static const FVector CameraMovementSpeed = FVector(-1000.f, 1000.f, 0.f);
+	MousePosition = UWidgetLayoutLibrary::GetMousePositionOnViewport(this);
+	ViewPortSize = UWidgetLayoutLibrary::GetViewportWidgetGeometry(this).GetLocalSize();
+	
+	
+	// Check if mouse position is inside the zone of the viewport where we need to move the camera.
+	// The viewport moving zone is 100 unit top/bottom/left/right.
+	// Given:
+	// Mouse position with origin in the middle: MousePosition - ViewPortSize * 0.5f
+	// The half of the "dead zone": (ViewPortSize - 2 * SensitiveZoneDimensions) / 2
+	// If the mouse position / half of the dead zone > 1 (or < -1), we need to move the camera., 
+	MousePosition = (MousePosition - ViewPortSize * 0.5f) / ((ViewPortSize - 2 * SensitiveZoneDimensions) / 2) ;
+	MousePosition.X = static_cast<int>(MousePosition.X);
+	MousePosition.Y = static_cast<int>(MousePosition.Y);
+	MousePosition.Normalize();
+
+	AddActorWorldOffset(CameraMovementSpeed * UKismetMathLibrary::Conv_Vector2DToVector( {MousePosition.Y, MousePosition.X}, 0) * DeltaTime);
 }

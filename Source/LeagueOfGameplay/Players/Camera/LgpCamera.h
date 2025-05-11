@@ -19,6 +19,9 @@ class LEAGUEOFGAMEPLAY_API ALgpCamera : public AActor
 
 public:
 	ALgpCamera();
+	
+	void Tick(float DeltaTime) override;
+	
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Camera")
