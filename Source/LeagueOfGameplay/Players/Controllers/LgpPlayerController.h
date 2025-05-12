@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "InputActionValue.h"
 #include "GameFramework/PlayerController.h"
 #include "LgpPlayerController.generated.h"
 
@@ -29,6 +30,8 @@ protected:
 	void OnMoveToTriggered();
 	/** Called when the player releases the MoveTo action or if the input is canceled. Move to the destination */
 	void OnMoveToReleased();
+    /** Called when the user triggers the zoom action. */
+	void OnZoomTriggered(const FInputActionValue& Value);
 	
 	//~APlayerController interface
 	void SetupInputComponent() override;
@@ -56,6 +59,9 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "LeagueOfGameplay|Input|MoveTo", meta=(AllowPrivateAccess = "true"))
 	TObjectPtr<UInputAction> MoveToAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "LeagueOfGameplay|Input|Zoom", meta=(AllowPrivateAccess = "true"))
+	TObjectPtr<UInputAction> ZoomAction;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "LeagueOfGameplay|Input|MoveTo", meta=(AllowPrivateAccess = "true"))
 	UNiagaraSystem* FXCursor;

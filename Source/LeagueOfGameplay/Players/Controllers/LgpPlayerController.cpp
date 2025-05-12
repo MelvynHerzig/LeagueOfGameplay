@@ -42,6 +42,11 @@ void ALgpPlayerController::OnMoveToReleased()
 	UAIBlueprintHelperLibrary::SimpleMoveToLocation(this, Destination);
 }
 
+void ALgpPlayerController::OnZoomTriggered(const FInputActionValue& Value)
+{
+	PlayerCamera->Zoom(Value.Get<float>());
+}
+
 void ALgpPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
@@ -61,6 +66,7 @@ void ALgpPlayerController::SetupInputComponent()
 		EnhancedInputComponent->BindAction(MoveToAction, ETriggerEvent::Triggered, this, &ALgpPlayerController::OnMoveToTriggered);
 		EnhancedInputComponent->BindAction(MoveToAction, ETriggerEvent::Completed, this, &ALgpPlayerController::OnMoveToReleased);
 		EnhancedInputComponent->BindAction(MoveToAction, ETriggerEvent::Canceled, this, &ALgpPlayerController::OnMoveToReleased);
+		EnhancedInputComponent->BindAction(ZoomAction, ETriggerEvent::Triggered, this, &ALgpPlayerController::OnZoomTriggered);
 	}
 	else
 	{

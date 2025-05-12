@@ -21,6 +21,7 @@ ALgpCamera::ALgpCamera()
 	SpringArmComponent->TargetArmLength = 700.f;
 	SpringArmComponent->SetRelativeRotation(FRotator(-60.f, 0.f, 0.f));
 	SpringArmComponent->bDoCollisionTest = false;
+	SpringArmTargetLength = SpringArmComponent->TargetArmLength;
 
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 	CameraComponent->SetupAttachment(SpringArmComponent, USpringArmComponent::SocketName);
@@ -31,6 +32,7 @@ void ALgpCamera::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	// --------------------- Camera translation ---------------------
 	static FVector2d MousePosition = FVector2d::ZeroVector;
 	static FVector2d ViewPortSize = FVector2d::ZeroVector;
 	static const FVector2d SensitiveZoneDimensions = FVector2d(100.f, 100.f);
@@ -51,4 +53,17 @@ void ALgpCamera::Tick(float DeltaTime)
 	MousePosition.Normalize();
 
 	AddActorWorldOffset(CameraMovementSpeed * UKismetMathLibrary::Conv_Vector2DToVector( {MousePosition.Y, MousePosition.X}, 0) * DeltaTime);
+
+	// --------------------- Camera Zoom ---------------------
+	SpringArmComponent->TargetArmLength = FMath::FInterpTo(
+		SpringArmComponent->TargetArmLength,
+		SpringArmTargetLength,
+		DeltaTime,
+		10.f
+	);
+}
+
+void ALgpCamera::Zoom(float Offset)
+{
+	SpringArmTargetLength = FMath::Clamp(SpringArmComponent->TargetArmLength - Offset * 50, 300.f, 700.f);
 }

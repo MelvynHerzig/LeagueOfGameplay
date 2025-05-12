@@ -19,9 +19,14 @@ class LEAGUEOFGAMEPLAY_API ALgpCamera : public AActor
 
 public:
 	ALgpCamera();
-	
+
+	/**
+	 * Each frame this function is called to update the camera position.
+	 * @param DeltaTime The time since the last frame.
+	 */
 	void Tick(float DeltaTime) override;
-	
+
+	void Zoom(float Offset);
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Camera")
@@ -29,4 +34,7 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Camera")
 	TObjectPtr<UCameraComponent> CameraComponent;
+
+	/** Value to which the camera will zoom. */
+	float SpringArmTargetLength;
 };
