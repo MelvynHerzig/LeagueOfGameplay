@@ -47,6 +47,22 @@ void ALgpPlayerController::OnZoomTriggered(const FInputActionValue& Value)
 	PlayerCamera->Zoom(Value.Get<float>());
 }
 
+void ALgpPlayerController::OnLockCameraStarted()
+{
+	if (PlayerCamera)
+	{
+		PlayerCamera->Follow(GetPawn());
+	}
+}
+
+void ALgpPlayerController::OnLockCameraReleased()
+{
+	if (PlayerCamera)
+	{
+		PlayerCamera->StopFollow();
+	}
+}
+
 void ALgpPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
@@ -67,6 +83,8 @@ void ALgpPlayerController::SetupInputComponent()
 		EnhancedInputComponent->BindAction(MoveToAction, ETriggerEvent::Completed, this, &ALgpPlayerController::OnMoveToReleased);
 		EnhancedInputComponent->BindAction(MoveToAction, ETriggerEvent::Canceled, this, &ALgpPlayerController::OnMoveToReleased);
 		EnhancedInputComponent->BindAction(ZoomAction, ETriggerEvent::Triggered, this, &ALgpPlayerController::OnZoomTriggered);
+		EnhancedInputComponent->BindAction(LockCameraAction, ETriggerEvent::Started, this, &ALgpPlayerController::OnLockCameraStarted);
+		EnhancedInputComponent->BindAction(LockCameraAction, ETriggerEvent::Completed, this, &ALgpPlayerController::OnLockCameraReleased);
 	}
 	else
 	{

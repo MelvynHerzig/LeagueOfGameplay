@@ -26,6 +26,14 @@ public:
 	 */
 	void Tick(float DeltaTime) override;
 
+	/**
+	 * Follow the passed actor.
+	 * @param Target Lock the camera on the target pawn.
+	 */
+	void Follow(APawn* Target);
+
+	void StopFollow();
+
 	void Zoom(float Offset);
 
 protected:
@@ -37,4 +45,6 @@ protected:
 
 	/** Value to which the camera will zoom. */
 	float SpringArmTargetLength;
+
+	TWeakObjectPtr<APawn> LockedActor;
 };

@@ -32,6 +32,10 @@ protected:
 	void OnMoveToReleased();
     /** Called when the user triggers the zoom action. */
 	void OnZoomTriggered(const FInputActionValue& Value);
+	/** Called on start of camera lock input. */
+	void OnLockCameraStarted();
+	/** Called on release of camera lock input. */
+	void OnLockCameraReleased();
 	
 	//~APlayerController interface
 	void SetupInputComponent() override;
@@ -62,6 +66,9 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "LeagueOfGameplay|Input|Zoom", meta=(AllowPrivateAccess = "true"))
 	TObjectPtr<UInputAction> ZoomAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "LeagueOfGameplay|Input|LockCamera", meta=(AllowPrivateAccess = "true"))
+	TObjectPtr<UInputAction> LockCameraAction;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "LeagueOfGameplay|Input|MoveTo", meta=(AllowPrivateAccess = "true"))
 	UNiagaraSystem* FXCursor;
