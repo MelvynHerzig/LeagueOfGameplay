@@ -60,7 +60,7 @@ void ALgpCamera::Tick(float DeltaTime)
 		MousePosition.Y = static_cast<int>(MousePosition.Y);
 		MousePosition.Normalize();
 
-		AddActorWorldOffset(CameraMovementSpeed * UKismetMathLibrary::Conv_Vector2DToVector( {MousePosition.Y, MousePosition.X}, 0) * DeltaTime);	
+		AddActorWorldOffset(CameraMovementSpeed * UKismetMathLibrary::Conv_Vector2DToVector({MousePosition.Y, MousePosition.X}, 0) * DeltaTime);	
 	}
 
 	// --------------------- Camera Zoom ---------------------

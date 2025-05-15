@@ -98,9 +98,11 @@ void ALgpPlayerController::OnPossess(APawn* InPawn)
 
 	// Add a new camera and uses it.
 	FVector CameraLocation = InPawn->GetActorLocation();
-	PlayerCamera = GetWorld()->SpawnActor<ALgpCamera>(CameraClass, CameraLocation, FRotator::ZeroRotator);
-	
-	SetViewTarget(PlayerCamera);
+	if (PlayerCamera == nullptr)
+	{
+		PlayerCamera = GetWorld()->SpawnActor<ALgpCamera>(CameraClass, CameraLocation, FRotator::ZeroRotator);
+		SetViewTarget(PlayerCamera);
+	}
 }
 
 bool ALgpPlayerController::QueryHitLocationUnderCursor(FVector& Location)
