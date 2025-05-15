@@ -12,18 +12,6 @@ ALgpCharacter::ALgpCharacter(const FObjectInitializer& ObjectInitializer): Super
 	PrimaryActorTick.bStartWithTickEnabled = false;
 	PrimaryActorTick.bCanEverTick = false;
 
-	// Set up the camera
-	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComponent"));
-	SpringArmComponent->SetupAttachment(RootComponent);
-	SpringArmComponent->SetUsingAbsoluteRotation(true);
-	SpringArmComponent->TargetArmLength = 700.f;
-	SpringArmComponent->SetRelativeRotation(FRotator(-60.f, 0.f, 0.f));
-	SpringArmComponent->bDoCollisionTest = false;
-
-	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
-	CameraComponent->SetupAttachment(SpringArmComponent, USpringArmComponent::SocketName);
-	CameraComponent->bUsePawnControlRotation = false;
-
 	// Don't rotate character to camera direction, because to we want to use movement direction.
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;

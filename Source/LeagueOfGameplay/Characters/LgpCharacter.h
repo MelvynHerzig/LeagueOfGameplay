@@ -25,11 +25,4 @@ public:
 	//~AActor interface
 	virtual void BeginPlay() override;
 	//~End of AActor interface
-
-protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Camera")
-	TObjectPtr<USpringArmComponent> SpringArmComponent;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Camera")
-	TObjectPtr<UCameraComponent> CameraComponent;
 };

@@ -8,6 +8,7 @@
 #include "NiagaraFunctionLibrary.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "LeagueOfGameplay/LeagueOfGameplay.h"
+#include "LeagueOfGameplay/Players/Camera/LgpCamera.h"
 
 ALgpPlayerController::ALgpPlayerController()
 {
@@ -41,6 +42,27 @@ void ALgpPlayerController::OnMoveToReleased()
 	UAIBlueprintHelperLibrary::SimpleMoveToLocation(this, Destination);
 }
 
+void ALgpPlayerController::OnZoomTriggered(const FInputActionValue& Value)
+{
+	PlayerCamera->Zoom(Value.Get<float>());
+}
+
+void ALgpPlayerController::OnLockCameraStarted()
+{
+	if (PlayerCamera)
+	{
+		PlayerCamera->Follow(GetPawn());
+	}
+}
+
+void ALgpPlayerController::OnLockCameraReleased()
+{
+	if (PlayerCamera)
+	{
+		PlayerCamera->StopFollow();
+	}
+}
+
 void ALgpPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
@@ -60,10 +82,26 @@ void ALgpPlayerController::SetupInputComponent()
 		EnhancedInputComponent->BindAction(MoveToAction, ETriggerEvent::Triggered, this, &ALgpPlayerController::OnMoveToTriggered);
 		EnhancedInputComponent->BindAction(MoveToAction, ETriggerEvent::Completed, this, &ALgpPlayerController::OnMoveToReleased);
 		EnhancedInputComponent->BindAction(MoveToAction, ETriggerEvent::Canceled, this, &ALgpPlayerController::OnMoveToReleased);
+		EnhancedInputComponent->BindAction(ZoomAction, ETriggerEvent::Triggered, this, &ALgpPlayerController::OnZoomTriggered);
+		EnhancedInputComponent->BindAction(LockCameraAction, ETriggerEvent::Started, this, &ALgpPlayerController::OnLockCameraStarted);
+		EnhancedInputComponent->BindAction(LockCameraAction, ETriggerEvent::Completed, this, &ALgpPlayerController::OnLockCameraReleased);
 	}
 	else
 	{
 		UE_LOG(LogLgp, Warning, TEXT("InputComponent is not of type UEnhancedInputComponent. Please check your input settings."));
+	}
+}
+
+void ALgpPlayerController::OnPossess(APawn* InPawn)
+{
+	Super::OnPossess(InPawn);
+
+	// Add a new camera and uses it.
+	FVector CameraLocation = InPawn->GetActorLocation();
+	if (PlayerCamera == nullptr)
+	{
+		PlayerCamera = GetWorld()->SpawnActor<ALgpCamera>(CameraClass, CameraLocation, FRotator::ZeroRotator);
+		SetViewTarget(PlayerCamera);
 	}
 }
 
