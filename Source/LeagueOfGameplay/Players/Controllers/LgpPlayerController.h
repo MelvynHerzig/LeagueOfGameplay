@@ -3,8 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "InputActionValue.h"
 #include "GameFramework/PlayerController.h"
+#include "InputActionValue.h"
 #include "LgpPlayerController.generated.h"
 
 class ALgpCamera;

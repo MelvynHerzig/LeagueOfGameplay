@@ -1,13 +1,13 @@
 ﻿// Herzig Melvyn - League of Gameplay
 
-#include "LgpCamera.h"
+#include "Players/Camera/LgpCamera.h"
 
 #include "Blueprint/WidgetLayoutLibrary.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/PawnMovementComponent.h"
+#include "GameFramework/SpringArmComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Math/MathFwd.h"
-#include "GameFramework/SpringArmComponent.h"
 
 
 // Sets default values

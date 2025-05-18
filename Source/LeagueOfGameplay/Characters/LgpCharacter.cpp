@@ -1,11 +1,9 @@
 // Herzig Melvyn - League of Gameplay
 
-#include "LgpCharacter.h"
+#include "Characters/LgpCharacter.h"
 
-#include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "GameFramework/SpringArmComponent.h"
 
 ALgpCharacter::ALgpCharacter(const FObjectInitializer& ObjectInitializer): Super(ObjectInitializer)
 {
