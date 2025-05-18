@@ -25,4 +25,9 @@ public:
 	//~AActor interface
 	virtual void BeginPlay() override;
 	//~End of AActor interface
+
+	//~ACharacter interface
+	virtual void PossessedBy(AController* NewController) override;
+	virtual void OnRep_PlayerState() override;
+	//~End of ACharacter interface
 };

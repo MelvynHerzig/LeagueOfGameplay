@@ -3,6 +3,4 @@
 #include "LeagueOfGameplay.h"
 #include "Modules/ModuleManager.h"
 
-IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, LeagueOfGameplay, "LeagueOfGameplay" );
-
-DEFINE_LOG_CATEGORY(LogLgp)
+IMPLEMENT_PRIMARY_GAME_MODULE(FDefaultGameModuleImpl, LeagueOfGameplay, "LeagueOfGameplay");
