@@ -7,8 +7,8 @@
 
 ULgpHealthAttributeSet::ULgpHealthAttributeSet()
 {
-	InitHealth(600.0f);
 	InitMaxHealth(600.0f);
+	InitHealth(GetMaxHealth());
 }
 
 void ULgpHealthAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
