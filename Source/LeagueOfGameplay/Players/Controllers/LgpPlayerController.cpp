@@ -1,14 +1,18 @@
 // Herzig Melvyn - League of Gameplay
 
 
-#include "LgpPlayerController.h"
+#include "Players/Controllers/LgpPlayerController.h"
 
+#include "AbilitySystemComponent.h"
+#include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "NiagaraFunctionLibrary.h"
-#include "Blueprint/AIBlueprintHelperLibrary.h"
-#include "LeagueOfGameplay/LeagueOfGameplay.h"
-#include "LeagueOfGameplay/Players/Camera/LgpCamera.h"
+
+#include "Core/Logging/LgpLogging.h"
+#include "Players/Camera/LgpCamera.h"
+#include "Players/States/LgpPlayerState.h"
+
 
 ALgpPlayerController::ALgpPlayerController()
 {

@@ -1,7 +1,7 @@
 // Herzig Melvyn - League of Gameplay
 
 
-#include "LgpGameMode.h"
+#include "Core/GameModes/LgpGameMode.h"
 
 ALgpGameMode::ALgpGameMode(const FObjectInitializer& ObjectInitializer): Super(ObjectInitializer)
 {}

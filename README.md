@@ -6,7 +6,8 @@ Project implementing some League of Legends gameplay in Unreal Engine 5 with Gam
 
 0. [Setup](#0-setup)
 1. [Adding a character](#1-adding-a-character-with-movement)
-1. [Camera movement](#2-camera-movement)
+2. [Camera movement](#2-camera-movement)
+3. [Setup Gameplay Ability System](#2-setup-gameplay-ability-system)
 
 
 # 0) Setup
@@ -100,5 +101,59 @@ Another input action, `IA_LockCamera`, was added and bound to the spacebar in th
 - `OnLockCameraStarted`: Calls `LgpCamera.Follow`, which stores a reference to the target pawn. On each tick, if a pawn is set, the camera follows its position and disables manual movement. The pawn's movement component is configured to tick before the camera to prevent a one-frame delay.
 
 - `OnLockCameraReleased`: Calls `LgpCamera.StopFollow`, which clears the pawn reference and restores normal camera control.
+
+</details>
+
+# 3) Setup Gameplay Ability System
+
+<details>
+
+<summary>Expand</summary>
+
+In this chapter, we begin setting up the project with the <b>Gameplay Ability System (GAS)</b>. This will serve as the foundation for all the core gameplay mechanics we plan to implement, such as:
+- Health
+- Mana
+- Spells
+- Auto-attacks
+- ...and much more
+
+## 3.1) Enabling GAS
+
+One of the first steps is to enable the <b>Gameplay Ability System</b> plugin in the Unreal Editor.
+We also need to add the following modules to the project's `.Build.cs` file:
+
+- `GameplayAbilities`
+- `GameplayTags`
+- `GameplayTasks`
+
+## 3.2) Creating an ability system component
+
+In this project, we've decided to place the <b>Ability System Component (ASC)</b> on the <b>Player State</b>.
+The main advantages of using the Player State over the Character are:
+- <b>Persistence</b>: The Player State persists across character respawns, so we don't need to manage ASC transfer between characters.
+- <b>Multiplayer</b>: Best Practice: In networked games, the Player State offers better control over authority and replication.
+
+<b>Classes Created</b>:
+- `LgpAbilitySystemComponent`: Our custom ASC class. Creating a subclass allows us to tailor the ASC to our needs.
+- `LgpPlayerState` (and its Blueprint counterpart): This class now contains a `TObjectPtr<ULgpAbilitySystemComponent> AbilitySystemComponent`.
+
+Since this is a multiplayer project, we must initialize the ASC both on the <b>server</b> and on <b>clients</b>:
+- <b>Server</b>: Initialization is handled in the `PossessedBy` function of `LgpCharacter`.
+- <b>Client</b>: We wait for the `PlayerState` to replicate, and initialize the ASC in `OnRep_PlayerState`.
+
+In both cases:
+
+The <b>Owner</b> of the ASC is the Player State.
+The <b>Avatar</b> Actor is the Character.
+
+> Note: Both the Owner and the Avatar must implement the IAbilitySystemInterface for the ASC to function correctly.
+
+
+## 3.3) Adding an attribute set
+
+The first attribute set added is a `HealthAttributeSet`, which manages the character's `current` and `maximum health`.
+Initially, the attribute set is added to the `Player State`.
+
+>Tip: You can now open the Gameplay Debugger (press `'`) to see that the character has 600 health points.
 
 </details>
