@@ -7,6 +7,7 @@
 #include "GameFramework/PlayerState.h"
 #include "LgpPlayerState.generated.h"
 
+class ULgpHealthAttributeSet;
 class ULgpAbilitySystemComponent;
 /**
  * 
@@ -25,4 +26,7 @@ public:
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "LeagueOfGameplay|Abilities")
 	TObjectPtr<ULgpAbilitySystemComponent> AbilitySystemComponent;
+
+	UPROPERTY()
+	TObjectPtr<ULgpHealthAttributeSet> HealthAttributeSet;
 };

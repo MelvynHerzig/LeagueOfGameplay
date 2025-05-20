@@ -7,7 +7,7 @@
 #include "LgpAbilitySystemComponent.generated.h"
 
 /**
- * 
+ * Ability system component used by League of Gameplay.
  */
 UCLASS()
 class LEAGUEOFGAMEPLAY_API ULgpAbilitySystemComponent : public UAbilitySystemComponent

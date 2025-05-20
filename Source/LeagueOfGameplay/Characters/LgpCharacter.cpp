@@ -3,6 +3,7 @@
 #include "Characters/LgpCharacter.h"
 
 #include "AbilitySystemComponent.h"
+#include "AbilitySystemGlobals.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
@@ -67,4 +68,9 @@ void ALgpCharacter::OnRep_PlayerState()
 			}
 		}
 	}
+}
+
+UAbilitySystemComponent* ALgpCharacter::GetAbilitySystemComponent() const
+{
+	return UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(GetPlayerState());
 }
